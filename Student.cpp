@@ -4,6 +4,7 @@ using namespace std;
 
 bool nameSort = false;
 int num;
+long long counter = 0;
 
 class Student {
     string name, id;
@@ -39,10 +40,15 @@ public:
 template<typename T>
 void Selection(T arr[]) {
     for (int i = 0; i < num; ++i) {
+        counter++;
         int minPos = i;
         for (int j = i + 1; j < num; ++j) {
-            if (arr[j] < arr[minPos])
+            counter++;
+            if (arr[j] < arr[minPos]){
                 minPos = j;
+                counter++;
+            }
+               
         }
         swap(arr[minPos], arr[i]);
     }
@@ -54,15 +60,19 @@ void Merge(T arr[], int l, int m, int r) {
     int n1 = m - l + 1, n2 = r - m;
     T *leftArray = new Student[n1], *rightArray = new Student[n2];
     for (int i = 0; i < n1; ++i) {
+        counter++;
         leftArray[i] = arr[l + i];
     }
     for (int i = 0; i < n2; ++i) {
         rightArray[i] = arr[m + i + 1];
+        counter++;
     }
     int k = l, pos1, pos2;
     pos1 = pos2 = 0;
     while (pos1 < n1 && pos2 < n2) {
+        counter+=2;
         if (leftArray[pos1] < rightArray[pos2]) {
+            counter++;
             arr[k] = leftArray[pos1];
             pos1++;
         } else {
@@ -72,11 +82,13 @@ void Merge(T arr[], int l, int m, int r) {
         k++;
     }
     while (pos1 < n1) {
+        counter++;
         arr[k] = leftArray[pos1];
         pos1++;
         k++;
     }
     while (pos2 < n2) {
+        counter++;
         arr[k] = rightArray[pos2];
         pos2++;
         k++;
@@ -89,6 +101,7 @@ void Merge(T arr[], int l, int m, int r) {
 template<typename T>
 void mergeSort(T arr[], int l, int r) {
     if (l < r) {
+        counter++;
         int m = (l + r) / 2;
         mergeSort(arr, l, m);
         mergeSort(arr, m + 1, r);
@@ -100,9 +113,15 @@ void mergeSort(T arr[], int l, int r) {
 template<typename T>
 void bubbleSort(T arr[]) {
     for (int i = 0; i < num; ++i) {
+        counter++;
         for (int j = 0; j < num - 1; ++j) {
-            if (arr[j + 1] < arr[j])
+            counter++;
+            if (arr[j + 1] < arr[j]){
+                counter++;
                 swap(arr[j + 1], arr[j]);
+                counter++;
+            }
+                
         }
     }
 }
@@ -110,10 +129,13 @@ void bubbleSort(T arr[]) {
 template<typename T>
 void shellSort(T arr[], int size) {
     for (int i = size / 2; i > 0; i /= 2) {
+        counter++;
         for (int j = i; j < size; ++j) {
+            counter++;
             T var = arr[j];
             int k;
             for (k = j; k >= i && arr[k - i] > var; k -= i) {
+                counter+=2;
                 arr[k] = arr[k - i];
             }
 
