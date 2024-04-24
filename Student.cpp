@@ -2,7 +2,7 @@
 
 using namespace std;
 
-bool nameSort = true;
+bool nameSort = false;
 int num;
 
 class Student {
@@ -11,7 +11,7 @@ class Student {
 public:
     Student() {}
 
-    Student(const string& name, const string& id, const double gpa) : name(name), id(id), gpa(gpa) {
+    Student(const string &name, const string &id, const double gpa) : name(name), id(id), gpa(gpa) {
 
     }
 
@@ -22,15 +22,22 @@ public:
 
     }
 
-    friend ostream & operator << (ostream &out, Student & st){
+    bool operator>(const Student &st) const {
+        if (nameSort)
+            return this->name > st.name;
+        return this->gpa > st.gpa;
+
+    }
+
+    friend ostream &operator<<(ostream &out, Student &st) {
         out << st.name << '\n' << st.id << '\n' << st.gpa;
         return out;
     }
 
 };
 
-
-void Selection(Student arr[]) {
+template<typename T>
+void Selection(T arr[]) {
     for (int i = 0; i < num; ++i) {
         int minPos = i;
         for (int j = i + 1; j < num; ++j) {
@@ -42,8 +49,77 @@ void Selection(Student arr[]) {
 
 }
 
-void mergeSort(Student arr[], int l, int r){
+template<typename T>
+void Merge(T arr[], int l, int m, int r) {
+    int n1 = m - l + 1, n2 = r - m;
+    T *leftArray = new Student[n1], *rightArray = new Student[n2];
+    for (int i = 0; i < n1; ++i) {
+        leftArray[i] = arr[l + i];
+    }
+    for (int i = 0; i < n2; ++i) {
+        rightArray[i] = arr[m + i + 1];
+    }
+    int k = l, pos1, pos2;
+    pos1 = pos2 = 0;
+    while (pos1 < n1 && pos2 < n2) {
+        if (leftArray[pos1] < rightArray[pos2]) {
+            arr[k] = leftArray[pos1];
+            pos1++;
+        } else {
+            arr[k] = rightArray[pos2];
+            pos2++;
+        }
+        k++;
+    }
+    while (pos1 < n1) {
+        arr[k] = leftArray[pos1];
+        pos1++;
+        k++;
+    }
+    while (pos2 < n2) {
+        arr[k] = rightArray[pos2];
+        pos2++;
+        k++;
+    }
+    delete[]leftArray;
+    delete[]rightArray;
 
+}
+
+template<typename T>
+void mergeSort(T arr[], int l, int r) {
+    if (l < r) {
+        int m = (l + r) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        Merge(arr, l, m, r);
+    }
+
+}
+
+template<typename T>
+void bubbleSort(T arr[]) {
+    for (int i = 0; i < num; ++i) {
+        for (int j = 0; j < num - 1; ++j) {
+            if (arr[j + 1] < arr[j])
+                swap(arr[j + 1], arr[j]);
+        }
+    }
+}
+
+template<typename T>
+void shellSort(T arr[], int size) {
+    for (int i = size / 2; i > 0; i /= 2) {
+        for (int j = i; j < size; ++j) {
+            T var = arr[j];
+            int k;
+            for (k = j; k >= i && arr[k - i] > var; k -= i) {
+                arr[k] = arr[k - i];
+            }
+
+            arr[k] = var;
+        }
+    }
 }
 
 
@@ -76,8 +152,10 @@ Therefore, in your example, the first character ignored by ifile.ignore() is mos
         ifile.ignore(1, '\n');// Ignore one newline after "gpa".
         arr[i] = Student(name, id, gpa);
     }
-    Selection(arr);
+    //Selection(arr);
     //mergeSort(arr, 0, num - 1);
+    //bubbleSort(arr);
+    shellSort(arr, num);
     for (int i = 0; i < num; ++i) {
         cout << arr[i] << '\n';
     }
