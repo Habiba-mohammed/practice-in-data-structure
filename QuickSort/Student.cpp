@@ -54,7 +54,7 @@ int Partition(T *A[], int start, int end, int& cnt, bool compare (const T& a, co
 int main() {
     srand(time(NULL));
 
-    ifstream inputFile("students.txt"); // Open file for reading
+    ifstream inputFile("students.txt"); 
 
     if (!inputFile) {
         cerr << "Error: Unable to open file" << std::endl;
