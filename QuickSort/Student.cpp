@@ -33,95 +33,90 @@ int Partition(T *A[], int start, int end, int& cnt, bool compare (const T& a, co
 { // function compare as a parameter !// !
     // Generate a random number in between
     // start - end
-    srand(time(NULL));
     int random = (start-1) + rand() % ( (end-1) - (start-1));
     // Swap A[random] with A[high]
     swap(A[random], A[end-1]);
     T* pivot = A[end - 1];
     int pindex = start - 1;
-    for (int i = start; i < end - 1; i++) {
+
+    for (int i = start-1; i < end - 1; i++) {
         if (compare(*A[i], *pivot)) {
-            pindex++;
             swap(A[i], A[pindex]);
+            pindex++;
+
             cnt++;
         }
     }
-    swap(A[pindex + 1], A[end - 1]);
+    swap(A[pindex], A[end - 1]);
     return pindex + 1;
 }
 
 int main() {
-    std::ifstream inputFile("../students.txt"); // Open file for reading
+    srand(time(NULL));
+
+    ifstream inputFile("students.txt"); // Open file for reading
 
     if (!inputFile) {
-        std::cerr << "Error: Unable to open file" << std::endl;
+        cerr << "Error: Unable to open file" << std::endl;
         return 1;
     }
 
     int numStudents;
-    inputFile >> numStudents; // Read number of students from the file
+    inputFile >> numStudents; 
     Student *students[numStudents];
-    std::string firstName, lastName, id;
+    string firstName, lastName, id;
     double gpa;
 
-    // Read student information for each student
     for (int i = 0; i < numStudents; ++i) {
         inputFile >> firstName;
 
-        // Check if there's additional input for last name
         if (inputFile.peek() != '\n' && inputFile.peek() != '\r' && inputFile.peek() != EOF) {
             inputFile >> lastName;
         } else {
-            lastName = ""; // Last name not provided
+            lastName = ""; 
         }
 
-        // Read ID and GPA
         inputFile >> id >> gpa;
 
-        // Concatenate first name and last name (if provided) with a space
-        std::string fullName = (lastName.empty()) ? firstName : firstName + " " + lastName;
+        string fullName = (lastName.empty()) ? firstName : firstName + " " + lastName;
 
-        // Create a Student object and add it to the array
         students[i] = new Student(fullName, id, gpa);
     }
 
-    inputFile.close(); // Close the file after reading
+    inputFile.close(); 
 
-    // Sort students by Name (in ascending) and GPA (in descending) using QuickSort
     int cnt = 0;
-    QuickSort(students, 0, numStudents, cnt, compareByGPA); // First sort by GPA
+    QuickSort(students, 1, numStudents, cnt, compareByGPA); 
 
-    // Write sorted students by Name
-    std::ofstream outputFile1("../SortedByGPA.txt");
+    ofstream outputFile1("SortedByGPA.txt");
     if (!outputFile1) {
-        std::cerr << "Error: Unable to create SortedByGPA.txt" << std::endl;
+        cerr << "Error: Unable to create SortedByGPA.txt" << std::endl;
         return 1;
     }
 
     for (int i = 0; i < numStudents; ++i) {
         outputFile1 << students[i]->getName() << " " << students[i]->getId() << " " << students[i]->getGpa() << std::endl;
-//        delete students[i]; // Clean up dynamically allocated memory
+//        delete students[i]; 
     }
 
-    outputFile1.close(); // Close the output file
+    outputFile1.close(); 
 
-    QuickSort(students, 0, numStudents, cnt, compareByName); // Then sort by Name
+    QuickSort(students, 1, numStudents, cnt, compareByName);
 
-    // Write sorted students by Name
-    std::ofstream outputFile("../SortedByName.txt");
+    ofstream outputFile("SortedByName.txt");
     if (!outputFile) {
-        std::cerr << "Error: Unable to create SortedByName.txt" << std::endl;
+        cerr << "Error: Unable to create SortedByName.txt" << std::endl;
         return 1;
     }
 
     for (int i = 0; i < numStudents; ++i) {
         outputFile << students[i]->getName() << " " << students[i]->getId() << " " << students[i]->getGpa() << std::endl;
-        delete students[i]; // Clean up dynamically allocated memory
+        delete students[i]; 
     }
 
-    outputFile.close(); // Close the output file
+    outputFile.close(); 
 
-    std::cout << "Sorting and file writing completed successfully." << std::endl;
+    cout << "Sorting and file writing completed successfully." << std::endl;
 
     return 0;
 }
