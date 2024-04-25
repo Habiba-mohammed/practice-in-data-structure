@@ -105,8 +105,10 @@ public:
         while(curr_index<idx ){
             pre=temp;
             temp=temp->next;
+            curr_index++;
         }
         pre->next=temp->next;
+        delete temp;
 
     }
 
@@ -344,29 +346,31 @@ int main(){
 //     test.removeAtHead();
 //     test.print();
 
-     test.clear();
-     test.removeAtHead();
-     test.removeAtTail();
-     test.removeAt(5);
-     test.retrieveAt(5);
-     test.insertAt(5,4);
-     test.replaceAt(5,4);
-     test.clear();
-     test.insertAtTail(5);
-     test.insertAtTail(2);
+    test.clear();
+    test.removeAtHead();
+    test.removeAtTail();
+    test.removeAt(5);
+    test.retrieveAt(5);
+    test.insertAt(5,4);
+    test.replaceAt(5,4);
+    test.clear();
+    test.insertAtTail(5);
+    test.insertAtTail(2);
     test.insertAtTail(2);
     test.removeAt(2);
     test.insertAt(1,0) ;//152
     test.print();
     test.swap(0,test.size()-1);
     test.print();
-    test.removeAtTail();
-    test.removeAtTail();
-test.print();
+//    test.removeAtTail();
+//    test.removeAtTail();
+test.insertAtTail(6); test.insertAtTail(33);
+test.removeAt(2);
+    test.print();
 
     test.clear();
-kk.clear();
-k.clear();
+    kk.clear();
+    k.clear();
 
 
 
