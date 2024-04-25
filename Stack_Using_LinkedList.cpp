@@ -98,14 +98,18 @@ int Stack<T>::stackSize() const {
 
 template<typename T>
 void Stack<T>::clear() {
-    Node<T> *cur;
-    while (Top != nullptr) {
-        cur = Top;
-        Top = Top->next;
-        delete cur;
+    if (size){
+        Node<T> *cur;
+        while (Top != nullptr) {
+            cur = Top;
+            Top = Top->next;
+            delete cur;
+        }
+        delete Pop;
+        size = 0;
     }
-    delete Pop;
-    size = 0;
+    else
+        cout << "Stack is Empty";
 }
 
 template<typename T>
