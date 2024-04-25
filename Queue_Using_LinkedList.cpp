@@ -38,7 +38,7 @@ public:
 
 template<typename T>
 Queue<T>::Queue() {
-    front = back = nullptr;
+    front = back = deq = nullptr;
     size = 0;
 }
 
