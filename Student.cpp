@@ -119,7 +119,7 @@ void bubbleSort(T arr[]) {
             if (arr[j + 1] < arr[j]){
                 counter++;
                 swap(arr[j + 1], arr[j]);
-                counter++;
+    
             }
                 
         }
