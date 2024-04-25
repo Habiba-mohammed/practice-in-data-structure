@@ -104,14 +104,18 @@ int Queue<T>::queueSize() const {
 
 template<typename T>
 void Queue<T>::clear() {
-    Node<T> *cur;
-    while (front != nullptr) {
-        cur = front;
-        front = front->next;
-        delete cur;
+    if (size){
+        Node<T> *cur;
+        while (front != nullptr) {
+            cur = front;
+            front = front->next;
+            delete cur;
+        }
+        delete deq;
+        size = 0;
     }
-    delete deq;
-    size = 0;
+    else
+        cout << "Queue is Empty";
 }
 
 template<typename T>
