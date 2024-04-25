@@ -58,7 +58,7 @@ void Selection(T arr[]) {
 template<typename T>
 void Merge(T arr[], int l, int m, int r) {
     int n1 = m - l + 1, n2 = r - m;
-    T *leftArray = new Student[n1], *rightArray = new Student[n2];
+    T *leftArray = new T[n1], *rightArray = new T[n2];
     for (int i = 0; i < n1; ++i) {
         counter++;
         leftArray[i] = arr[l + i];
