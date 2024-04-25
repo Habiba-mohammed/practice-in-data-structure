@@ -9,6 +9,7 @@ class Node {
 public:
     T data;
     Node* next;
+//    Node* pre;
 };
 
 template<typename T>
@@ -58,7 +59,14 @@ public:
         Node<T>* newnode= new Node<T>();
         newnode->data=item;
 
-        if (is_empty() || idx>=size()) return;
+        if (is_empty()) {
+            cout << "list is empty!\n";
+            return;
+        }
+        if (idx >= size()) {
+            cout << "is not found this index in my list\n";
+            return;
+        }
 
         if (idx == 0) {
             insertAtHead(item);
@@ -78,7 +86,7 @@ public:
     }
     void removeAt(int idx){
         if (is_empty()) {
-            cout << "my list is empty\n";
+            cout << "list is empty!\n";
             return;
         }
         if (idx >= size()) {
@@ -103,10 +111,15 @@ public:
     }
 
     void removeAtHead(){
+        if(is_empty()) {cout<<"list is empty!\n";return;}
+        Node<T> *delptr=tail->next;
         tail->next=tail->next->next;
+        delete delptr;
     }
 
     void removeAtTail(){
+        if(is_empty()) {cout<<"list is empty!\n";return;}
+
         Node<T> *pre,*temp;
         pre=tail->next;
         temp=tail->next->next;
@@ -117,14 +130,14 @@ public:
         }
         pre->next=temp->next;
         tail=pre;
-
+        delete temp;
     }
 
 
 
     void print() {
         if (is_empty()) {
-            cout << "List is empty." << endl;
+            cout << "List is empty!" << endl;
             return;
         }
 
@@ -151,7 +164,11 @@ public:
 
     void replaceAt(T item, int idx){ //zero based
         if (is_empty()) {
-            cout << "This list is empty\n";
+            cout << "list is empty!\n";
+            return;
+        }
+        if (idx >= size()) {
+            cout << "is not found this index in my list\n";
             return;
         }
 
@@ -165,6 +182,15 @@ public:
     }
 
     T retrieveAt(int idx){
+
+        if (is_empty()) {
+            cout << "list is empty!\n";
+            return T();
+        }
+        if (idx >= size()) {
+            cout << "is not found this index in my list\n";
+            return T();
+        }
 
         Node <T>* temp=tail->next;
         ll curr_index=0;
@@ -189,18 +215,22 @@ public:
         T temp=this->retrieveAt(idx);
         return (temp==item);
     }
-    void clear(){
-        Node<T> *temp = tail->next->next;
-        Node<T> *delptr = nullptr;
-        while (temp != tail->next) {
-            delptr = temp;
-            temp = temp->next;
-            delete delptr;
+    void clear() {
+        if (tail == nullptr) {
+            return; // List is already empty
         }
-        delete tail->next;
-        tail = nullptr;
 
+        Node<T>* current = tail->next; // Start from the first node
+
+        do {
+            Node<T> *delptr=current;
+            current=current->next;
+            delete delptr;
+        } while (current != tail); // Continue until we circle back to the start
+
+        tail = nullptr; // Reset the tail pointer
     }
+
     void swap(int idx1, int idx2) {
         if (is_empty() || idx1 < 0 || idx2 < 0 || idx1 >= size() || idx2 >= size()) {
             std::cout << "Invalid indices or empty list.\n";
@@ -257,6 +287,9 @@ public:
         // Update tail pointer if necessary
         if (tail == curr1)  tail = curr2;
         else if (tail == curr2) tail = curr1;
+
+        temp=nullptr;
+
     }
 
 
@@ -298,11 +331,42 @@ int main(){
 //    test.clear();
     test.print();
 
-    test.swap(2,3); //76854 -> 76584
-    test.insertAtTail(5);
-    test.insertAtTail(6);
-    test.insertAtHead(4);
+    test.swap(2,3); //76854 ->
     test.print();
+//     test.insertAtTail(5);
+//     test.insertAtTail(6);
+//     test.insertAtHead(4);
+//     test.print();
+// //    test.clear();
+//     test.removeAtTail();
+
+// //cout<<"  ";
+//     test.removeAtHead();
+//     test.print();
+
+     test.clear();
+     test.removeAtHead();
+     test.removeAtTail();
+     test.removeAt(5);
+     test.retrieveAt(5);
+     test.insertAt(5,4);
+     test.replaceAt(5,4);
+     test.clear();
+     test.insertAtTail(5);
+     test.insertAtTail(2);
+    test.insertAtTail(2);
+    test.removeAt(2);
+    test.insertAt(1,0) ;//152
+    test.print();
+    test.swap(0,test.size()-1);
+    test.print();
+    test.removeAtTail();
+    test.removeAtTail();
+test.print();
+
+    test.clear();
+kk.clear();
+k.clear();
 
 
 
