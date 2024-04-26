@@ -1,0 +1,36 @@
+Algorithm: Quick Sort
+Running Time: 31800ns
+Number of comparisons: 0
+Yara
+666
+1
+Geham
+7535
+1.7
+Belal Kamal
+97848
+2.2
+Ahmed
+8888
+2.33
+Zokar
+8888
+2.5
+Malak
+66664
+2.7
+Dalia Ahmed
+756
+2.8
+Sara Ahmed
+78697
+3.1
+Corey
+8877
+3.4
+Ali
+3541
+3.5
+Mariam
+69712
+3.7
