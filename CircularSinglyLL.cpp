@@ -114,13 +114,18 @@ public:
 
     void removeAtHead(){
         if(is_empty()) {cout<<"list is empty!\n";return;}
-        Node<T> *delptr=tail->next;
-        tail->next=tail->next->next;
+        if(size()==1){tail=nullptr ; return;} // add to there
+        Node<T> *newhead  =tail->next->next;
+       Node<T> *delptr= tail->next;
+        tail->next=newhead;
         delete delptr;
     }
 
     void removeAtTail(){
         if(is_empty()) {cout<<"list is empty!\n";return;}
+        if(size()==1){tail=nullptr ; return;} // add to there
+
+
 
         Node<T> *pre,*temp;
         pre=tail->next;
@@ -155,6 +160,7 @@ public:
         cout << "\n";
     }
     int size(){
+        if(tail==nullptr) return 0;
         Node<T> *temp=tail->next->next;
         int cnt=1;
         while(temp!=tail->next){
@@ -298,81 +304,15 @@ public:
 };
 
 int main(){
-    CLL_S <int> k,kk,test;
-    k.insertAtTail(0);k.insertAtTail(1);k.insertAtTail(2);k.insertAtTail(3);k.insertAtTail(4);k.insertAtTail(5);
-    kk.insertAtHead(0);kk.insertAtHead(1);kk.insertAtHead(2);kk.insertAtHead(3);kk.insertAtHead(4);kk.insertAtHead(5);
+    CLL_S <int> s;
+    s.clear();
+    s.insertAtTail(6);
+    s.removeAtTail();
 
-    test.insertAtTail(5);
-    test.insertAtTail(6);
-    test.insertAtHead(4);
-
-
-
-    k.print();
-    kk.print();
-    test.print();
-
-    test.replaceAt(6,0);
-    test.replaceAt(5,1);
-    test.replaceAt(4,2);
-
-    test.print();
-    test.insertAt(7,0);
-    test.insertAt(8,2);
-    test.print(); //76854
-    cout<<test.size()<<"\n";
-
-//    test.removeAtHead();//6854
-//    test.removeAtTail();//685
-//    test.removeAt(1);//65
-
-    test.print();
-    cout<<test.retrieveAt(1)<<"\n";
-    cout<<test.isExist(5)<<"\n";
-    cout<<test.isItemAtEqual(5,1)<<"\n";
-//    test.clear();
-    test.print();
-
-    test.swap(2,3); //76854 ->
-    test.print();
-//     test.insertAtTail(5);
-//     test.insertAtTail(6);
-//     test.insertAtHead(4);
-//     test.print();
-// //    test.clear();
-//     test.removeAtTail();
-
-// //cout<<"  ";
-//     test.removeAtHead();
-//     test.print();
-
-    test.clear();
-    test.removeAtHead();
-    test.removeAtTail();
-    test.removeAt(5);
-    test.retrieveAt(5);
-    test.insertAt(5,4);
-    test.replaceAt(5,4);
-    test.clear();
-    test.insertAtTail(5);
-    test.insertAtTail(2);
-    test.insertAtTail(2);
-    test.removeAt(2);
-    test.insertAt(1,0) ;//152
-    test.print();
-    test.swap(0,test.size()-1);
-    test.print();
-//    test.removeAtTail();
-//    test.removeAtTail();
-test.insertAtTail(6); test.insertAtTail(33);
-test.removeAt(2);
-    test.print();
-
-    test.clear();
-    kk.clear();
-    k.clear();
-
-
+    s.removeAtTail();
+    s.clear();
+    cout<< s.size();
+    s.clear();
 
 
 }
