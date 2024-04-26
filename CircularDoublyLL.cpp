@@ -258,46 +258,57 @@ public:
 int main() {
     // Test cases for Doubly Circular Linked List
 
-    CLL_D<int> myCLL;
+//    CLL_D<int> myCLL;
+//
+//    // Insert elements
+//    myCLL.insertAtTail(10);
+//    myCLL.insertAtTail(20);
+//    myCLL.insertAtTail(30);
+//    myCLL.insertAtTail(40);
+//
+//    // Print the list
+//    cout << "Current list: ";
+//    myCLL.print(); // Output: 10 20 30 40
+//
+//    // Insert at head
+//    myCLL.insertAtHead(5);
+//    cout << "After inserting at head: ";
+//    myCLL.print(); // Output: 5 10 20 30 40
+//
+//    // Remove from tail
+//    myCLL.removeAtTail();
+//    cout << "After removing from tail: ";
+//    myCLL.print(); // Output: 5 10 20 30
+//
+//    // Remove from head
+//    myCLL.removeAtHead();
+//    cout << "After removing from head: ";
+//    myCLL.print(); // Output: 10 20 30
+//
+//    // Display size of the list
+//    cout << "Size of the list: " << myCLL.size() << endl; // Output: 3
+//    myCLL.insertAt(15,1);
+//    myCLL.insertAt(25,3);
+//    myCLL.insertAt(5,0);
+//    myCLL.insertAtTail(55500);
+//    myCLL.print();
+//    myCLL.removeAt(myCLL.size()-1);
+//    myCLL.print();
+//    myCLL.removeAt(2);
+//    myCLL.print();
+//    myCLL.clear();
+//    myCLL.print();
+////    cout<<myCLL.size();
+//    return 0;
 
-    // Insert elements
-    myCLL.insertAtTail(10);
-    myCLL.insertAtTail(20);
-    myCLL.insertAtTail(30);
-    myCLL.insertAtTail(40);
+    CLL_D <int> s;
+    s.clear();
+    s.insertAtTail(6);
+    s.removeAtTail();
 
-    // Print the list
-    cout << "Current list: ";
-    myCLL.print(); // Output: 10 20 30 40
-
-    // Insert at head
-    myCLL.insertAtHead(5);
-    cout << "After inserting at head: ";
-    myCLL.print(); // Output: 5 10 20 30 40
-
-    // Remove from tail
-    myCLL.removeAtTail();
-    cout << "After removing from tail: ";
-    myCLL.print(); // Output: 5 10 20 30
-
-    // Remove from head
-    myCLL.removeAtHead();
-    cout << "After removing from head: ";
-    myCLL.print(); // Output: 10 20 30
-
-    // Display size of the list
-    cout << "Size of the list: " << myCLL.size() << endl; // Output: 3
-    myCLL.insertAt(15,1);
-    myCLL.insertAt(25,3);
-    myCLL.insertAt(5,0);
-    myCLL.insertAtTail(55500);
-    myCLL.print();
-    myCLL.removeAt(myCLL.size()-1);
-    myCLL.print();
-    myCLL.removeAt(2);
-    myCLL.print();
-    myCLL.clear();
-    myCLL.print();
-//    cout<<myCLL.size();
-    return 0;
+    s.removeAtTail();
+    s.clear();
+    cout<< s.size()<<"\n";
+//    s.clear();
+s.print();
 }
