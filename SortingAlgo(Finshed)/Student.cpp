@@ -82,16 +82,18 @@ public:
 template<typename T>
 void insertionSort(T arr[]) {
     for (int i = 1; i < num; i++) {
-
+        counter++;
         T key = arr[i];
         int j = i - 1;
         while (j >= 0 && arr[j] > key) {
+            counter+=2;
             arr[j + 1] = arr[j];
             j = j - 1;
         }
-
+        counter++;
         arr[j + 1] = key;
     }
+    counter++;
 
 }
 
@@ -105,12 +107,14 @@ void selectionSort(T arr[]) {
             counter++;
             if (arr[j] < arr[minPos]) {
                 minPos = j;
-                counter++;
             }
+            counter++;
 
         }
+        counter++;
         swap(arr[minPos], arr[i]);
     }
+    counter++;
 
 }
 
@@ -122,16 +126,17 @@ void Merge(T arr[], int l, int m, int r) {
         counter++;
         leftArray[i] = arr[l + i];
     }
+    counter++;
     for (int i = 0; i < n2; ++i) {
         rightArray[i] = arr[m + i + 1];
         counter++;
     }
+    counter++;
     int k = l, pos1, pos2;
     pos1 = pos2 = 0;
     while (pos1 < n1 && pos2 < n2) {
         counter += 2;
         if (leftArray[pos1] < rightArray[pos2]) {
-            counter++;
             arr[k] = leftArray[pos1];
             pos1++;
         } else {
@@ -139,19 +144,23 @@ void Merge(T arr[], int l, int m, int r) {
             pos2++;
         }
         k++;
+        counter++;
     }
+    counter++;
     while (pos1 < n1) {
         counter++;
         arr[k] = leftArray[pos1];
         pos1++;
         k++;
     }
+    counter++;
     while (pos2 < n2) {
         counter++;
         arr[k] = rightArray[pos2];
         pos2++;
         k++;
     }
+    counter++;
     delete[]leftArray;
     delete[]rightArray;
 
@@ -176,13 +185,13 @@ void bubbleSort(T arr[]) {
         for (int j = 0; j < num - 1; ++j) {
             counter++;
             if (arr[j + 1] < arr[j]) {
-                counter++;
                 swap(arr[j + 1], arr[j]);
-                counter++;
             }
-
+            counter++;
         }
+        counter++;
     }
+    counter++;
 }
 
 template<typename T>
@@ -197,22 +206,14 @@ void shellSort(T arr[], int size) {
                 counter += 2;
                 arr[k] = arr[k - i];
             }
-
+            counter++;
             arr[k] = var;
         }
+        counter++;
     }
+    counter++;
 }
 
-
-void readInputFileName(string &str) {
-    cin >> str;
-    int Size = str.size();
-    if (Size > 4)
-        str += (str.substr(Size - 4, 4) == ".txt") ? "" : ".txt";
-    else
-        str += ".txt";
-    ifile.open(str);
-}
 
 template<typename T>
 int partition(T arr[], int start, int end) {
@@ -221,16 +222,20 @@ int partition(T arr[], int start, int end) {
     int pivLoc = i;
     while (true) {
         while (arr[pivLoc] <= arr[j] && pivLoc != j) {
+            counter+=2;
             j--;
         }
+        counter++;
         if (pivLoc == j)
             break;
         swap(arr[j], arr[pivLoc]);
         pivLoc = j;
 
         while (arr[pivLoc] >= arr[i] && pivLoc != i) {
+            counter+=2;
             i++;
         }
+        counter++;
         if (pivLoc == i)
             break;
         swap(arr[i], arr[pivLoc]);
@@ -244,6 +249,7 @@ template<typename T>
 void quickSort(T arr[], int l, int h) {
 
     if (l < h) {
+        counter++;
         int piv = partition(arr, l, h);
         quickSort(arr, l, piv - 1);
         quickSort(arr, piv + 1, h);
@@ -251,6 +257,15 @@ void quickSort(T arr[], int l, int h) {
 
 }
 
+void readInputFileName(string &str) {
+    cin >> str;
+    int Size = str.size();
+    if (Size > 4)
+        str += (str.substr(Size - 4, 4) == ".txt") ? "" : ".txt";
+    else
+        str += ".txt";
+    ifile.open(str);
+}
 
 template<typename T>
 void outputArrayAfterSorting(T arr[], T arr2[], map<int, string> &mp, auto duration, int &chooseNum) {
