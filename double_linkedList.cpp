@@ -1,4 +1,4 @@
- #include <iostream>
+#include <iostream>
 #define ll long long
 
 using namespace std;
@@ -216,11 +216,39 @@ public:
         temp->data=newdata;
 
     }
-    void swap(T first_ele_index,T second_ele_index){
-        
+    void swap(T first_ele_index, T second_ele_index) {
+        if (isEmpty()) return;
 
+        Node<T>* temp1 = Head;
+        Node<T>* temp2 = Head;
 
+        ll cur = 0;
+        while (temp1 != nullptr && cur < first_ele_index) {
+            temp1 = temp1->next;
+            cur++;
+        }
+        cur = 0;
+        while (temp2 != nullptr && cur < second_ele_index) {
+            temp2 = temp2->next;
+            cur++;
+        }
+
+        if (temp1 == nullptr || temp2 == nullptr) return;
+
+        if (temp1->prev != nullptr) temp1->prev->next = temp2;
+        else Head = temp2;
+
+        if (temp2->prev != nullptr) temp2->prev->next = temp1;
+        else Head = temp1;
+
+        Node<T>* temp = temp1->next;
+        temp1->next = temp2->next;
+        temp2->next = temp;
+        temp = temp1->prev;
+        temp1->prev = temp2->prev;
+        temp2->prev = temp;
     }
+
 };
 
 int main() {
@@ -233,16 +261,22 @@ int main() {
     // Printing the list
     cout << "List after appending elements: ";
     myList.print();
-    myList.append_at_tail(20);
     myList.append_at_tail(30);
     myList.append_at_tail(30);
-    myList.append_at_tail(30);
+    myList.append_at_tail(35);
+    myList.append_at_tail(36);
     myList.append_at_tail(30);
     myList.remove_at_index(5);
     myList.replace_at(333,0);
     // Printing the list
+    myList.append_at_tail(20);
+    myList.append_at_tail(44);
+    myList.append_at_tail(22);
+    myList.swap(2,5);
+
     cout << "List after appending elements: ";
     myList.print(); // Output: 10 20 30
+//    cout<<myList.retrive_at(7)<<'\n';
 
     return 0;
 }
