@@ -244,9 +244,91 @@ public:
         }
 
 
+    void swap(int idx1, int idx2) {
+        if (is_empty() || idx1 < 0 || idx2 < 0 || idx1 >= size() || idx2 >= size()) {
+            std::cout << "Invalid indices or empty list.\n";
+            return;
+        }
+
+        if (idx1 == idx2) {
+            return;
+        }
+
+        // Ensure idx1 is less than idx2 for easier processing
+        if (idx1 > idx2)
+            std::swap(idx1, idx2);
+
+        Node<T> *prev1 = tail, *curr1 = tail->next, *prev2 = nullptr, *curr2 = nullptr;
+
+        // Locate the nodes at idx1 and idx2
+        Node<T> *temp = tail->next; // Start from the head (tail->next)
+        int i = 0;
+        while (i <= idx2) {
+            if (i == idx1 - 1) {
+                prev1 = temp;
+                curr1 = temp->next;
+            }
+            if (i == idx2 - 1) {
+                prev2 = temp;
+                curr2 = temp->next;
+            }
+
+            temp = temp->next;
+            ++i;
+        }
+
+        // Swap nodes
+        if (curr1->next == curr2) {
+            // Nodes are adjacent
+            prev1->next = curr2;
+            curr2->prev=prev1;
+
+            curr1->next = curr2->next;
+            curr2->next = curr1;
+
+            curr1->prev=curr2;
+            curr1->next->prev=curr1;
+
+        } else if (curr2->next == curr1) {
+            // Nodes are adjacent but in reverse order
+            prev2->next = curr1;
+            curr1->prev=prev2;
+
+            curr2->next = curr1->next;
+            curr1->next->prev = curr2;
+
+            curr2->prev=curr1;
+            curr1->next=curr2;
+        } else {
+            // Nodes are not adjacent
+            Node<T> *after1=curr1->next,*after2=curr2->next;
+            prev1->next = curr2;
+            curr2->prev=prev1;
 
 
-    // Other functions like  swap can be implemented similarly
+            curr1->next = curr2->next;
+            curr2->next->prev=curr1;
+
+
+            prev2->next = curr1;
+            curr1->prev=prev2;
+
+            curr2->next=after1;
+            after1->prev=curr1;
+
+
+        }
+
+        // Update tail pointer if necessary
+        if (tail == curr1)  tail = curr2;
+        else if (tail == curr2) tail = curr1;
+
+        temp=nullptr;
+
+    }
+
+
+
 
     ~CLL_D() {
         while (!is_empty()) {
@@ -302,13 +384,19 @@ int main() {
 //    return 0;
 
     CLL_D <int> s;
-    s.clear();
-    s.insertAtTail(6);
-    s.removeAtTail();
-
-    s.removeAtTail();
-    s.clear();
-    cout<< s.size()<<"\n";
-//    s.clear();
+s.insertAtTail(5);
+s.insertAtHead(4);
+s.insertAt(3,0);
+s.print();
+s.swap(0,1);
+s.print();
+s.swap(1,2);
+s.print();
+s.removeAtTail();
+s.print();
+s.swap(0,1);
+s.print();
+s.removeAtHead();
+s.swap(0,0);
 s.print();
 }
