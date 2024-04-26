@@ -82,7 +82,7 @@ public:
         }
         Node <T> *delptr=tail->next;
         tail->next = tail->next->next;
-        tail->next->next->prev = tail;
+        tail->next->prev = tail;
 
         delete delptr;
     }
@@ -215,33 +215,33 @@ public:
 
     }
 
-        void removeAt(int idx){
-            if (is_empty()) {
-                cout << "list is empty!\n";
-                return;
-            }
-            if (idx >= size()) {
-                cout << "is not found this index in my list\n";
-                return;
-            }
-            if(idx==0) {removeAtHead();return;}
-            if(idx==size()-1){removeAtTail();return;}
-
-            Node<T>*pre,*temp;
-            pre=tail->next;
-            temp=tail->next->next;
-
-            ll curr_index=1;
-
-            while(curr_index<idx ){
-                pre=temp;
-                temp=temp->next;
-                curr_index++;
-            }
-            pre->next=temp->next;
-            temp->next->prev=pre;
-            delete temp;
+    void removeAt(int idx){
+        if (is_empty()) {
+            cout << "list is empty!\n";
+            return;
         }
+        if (idx >= size()) {
+            cout << "is not found this index in my list\n";
+            return;
+        }
+        if(idx==0) {removeAtHead();return;}
+        if(idx==size()-1){removeAtTail();return;}
+
+        Node<T>*pre,*temp;
+        pre=tail->next;
+        temp=tail->next->next;
+
+        ll curr_index=1;
+
+        while(curr_index<idx ){
+            pre=temp;
+            temp=temp->next;
+            curr_index++;
+        }
+        pre->next=temp->next;
+        temp->next->prev=pre;
+        delete temp;
+    }
 
 
     void swap(int idx1, int idx2) {
@@ -277,6 +277,8 @@ public:
             ++i;
         }
 
+        Node<T> *after1=curr1->next,*after2=curr2->next;
+
         // Swap nodes
         if (curr1->next == curr2) {
             // Nodes are adjacent
@@ -301,17 +303,17 @@ public:
             curr1->next=curr2;
         } else {
             // Nodes are not adjacent
-            Node<T> *after1=curr1->next,*after2=curr2->next;
             prev1->next = curr2;
             curr2->prev=prev1;
 
 
-            curr1->next = curr2->next;
-            curr2->next->prev=curr1;
+            curr1->next = after2;
+            after2->prev=curr1;
 
 
             prev2->next = curr1;
-            curr1->prev=prev2;
+            // curr1->prev=prev2;
+
 
             curr2->next=after1;
             after1->prev=curr1;
@@ -384,19 +386,31 @@ int main() {
 //    return 0;
 
     CLL_D <int> s;
-s.insertAtTail(5);
-s.insertAtHead(4);
-s.insertAt(3,0);
-s.print();
-s.swap(0,1);
-s.print();
-s.swap(1,2);
-s.print();
-s.removeAtTail();
-s.print();
-s.swap(0,1);
-s.print();
-s.removeAtHead();
-s.swap(0,0);
-s.print();
+    s.insertAtTail(5);
+    s.insertAtHead(4);
+    s.insertAt(3,0);
+    s.print();
+    s.swap(0,1);
+    s.print();
+    s.swap(1,2);
+    s.print();
+    // s.removeAtTail();
+    s.print();
+    s.swap(0,1);
+    s.print();
+    s.removeAtHead();
+    s.swap(0,0);
+    s.print();
+    s.insertAtTail(3);
+    s.insertAtTail(4);
+    s.insertAtTail(7);
+    s.insertAtTail(8);
+    s.insertAtTail(9);
+    s.print();
+    s.removeAtTail();
+    s.swap(2,0);
+
+    s.print();
+
+
 }
