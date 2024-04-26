@@ -1,4 +1,4 @@
-
+ 
 #include <iostream>
 #define ll long long
 using namespace std;
@@ -64,7 +64,7 @@ public:
         return false;
     }
 
-    void insert_before(ll current, ll newitem) {
+    void insert_before(T current, T newitem) {
         if (is_empty()) {
             cout << "List is empty\n";
             return;
@@ -92,7 +92,7 @@ public:
         temp->next = newnode;
     }
 
-    void insert_before_index(ll item, ll index) {
+    void insert_before_index(T item, ll index) {
         ll cur_index = 0;
         if (index > size()) return;
         Node<T> *temp = Head;
@@ -276,8 +276,6 @@ public:
             delete delptr;
         }
     }
-
-    template<typename TT>
     T retrieveAt(int index) {
         if (is_empty()) {
             return T();
@@ -298,26 +296,17 @@ public:
     }
 };
 int main() {
-    // Test with integer data type
     LinkedList<int> intList;
 
     // Inserting integer elements at the beginning of the list
-    intList.insert_first(6);
-    intList.insert_first(50);
-    intList.insert_first(7);
-    intList.insert_first(8);
-    intList.insert_first(3);
-    intList.insert_first(2);
-    intList.insert_first(5);
-
+    intList.append(6);
+    intList.append(50);
+    intList.append(7);
+    intList.append(8);
+    intList.append(9);
     cout << "Integer List:\n";
     intList.print();
     cout << '\n';
-
-    // Retrieving an integer item at index
-    int retrievedInt = intList.retrieveAt<int>(2);
-    cout << "Item at index 2: " << retrievedInt << '\n';
-
     cout << '\n';
 
     // Test with string data type
@@ -339,9 +328,7 @@ int main() {
     strList.print();
     cout << '\n';
     strList.swap(0,strList.size());
-    // Retrieving a string item at index
-    string retrievedStr = strList.retrieveAt<string>(1);
-    cout << "Item at index 1: " << retrievedStr << '\n';
+    strList.retrieveAt(4);
 
  }
 
