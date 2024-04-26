@@ -43,7 +43,7 @@ public:
         tail->next->prev = newNode;
         tail->next = newNode;
         tail = newNode;
-
+        return;
     }
 
     void insertAtHead(T newitem) { //done
@@ -82,7 +82,7 @@ public:
         }
         Node <T> *delptr=tail->next;
         tail->next = tail->next->next;
-        tail->next->prev = tail;
+        tail->next->next->prev = tail;
 
         delete delptr;
     }
@@ -183,15 +183,16 @@ public:
         temp->data = item;
     }
 
-    void insertAt(T item, int idx){
-        Node<T>* newnode= new Node<T>(item);
+    void insertAt(T item, int idx) {
+        Node<T>* newnode = new Node<T>(item);
 
         if (is_empty()) {
             cout << "list is empty!\n";
             return;
         }
+
         if (idx >= size()) {
-            cout << "is not found this index in my list\n";
+            cout << "Index out of bounds\n";
             return;
         }
 
@@ -199,21 +200,25 @@ public:
             insertAtHead(item);
             return;
         }
-        Node<T> *temp = tail->next->next; //second element
-        Node<T> *Pre =tail->next; //head
-        ll currindex = 1;
-        while (currindex < idx) {
-            Pre=temp;
+
+        Node<T>* temp = tail->next; // Start from the head (tail->next)
+        Node<T>* pre = nullptr;
+        for (int i = 0; i < idx; ++i) {
+            pre = temp;
             temp = temp->next;
-            currindex++;
         }
-        Pre->next=newnode;
-        newnode->next=temp;
-        newnode->prev=Pre;
-        temp->prev=temp;
 
+        pre->next = newnode;
+        newnode->prev = pre;
+        newnode->next = temp;
+        temp->prev = newnode;
 
+        // If inserting at the last index, update tail
+        if (temp == tail->next) {
+            tail = newnode;
+        }
     }
+
 
     void removeAt(int idx){
         if (is_empty()) {
@@ -312,7 +317,7 @@ public:
 
 
             prev2->next = curr1;
-            // curr1->prev=prev2;
+            curr1->prev=prev2;
 
 
             curr2->next=after1;
@@ -333,9 +338,7 @@ public:
 
 
     ~CLL_D() {
-        while (!is_empty()) {
-            removeAtTail();
-        }
+      this->clear();
     }
 };
 
@@ -387,14 +390,19 @@ int main() {
 
     CLL_D <int> s;
     s.insertAtTail(5);
-    s.insertAtHead(4);
-    s.insertAt(3,0);
+    s.insertAtTail(5);
     s.print();
-    s.swap(0,1);
+
+
+    s.insertAtHead(4);
+    s.print();
+    s.insertAt(3,1);
+    s.print();
+    s.swap(0,2);
     s.print();
     s.swap(1,2);
     s.print();
-    // s.removeAtTail();
+    s.removeAtTail();
     s.print();
     s.swap(0,1);
     s.print();
@@ -408,6 +416,10 @@ int main() {
     s.insertAtTail(9);
     s.print();
     s.removeAtTail();
+    s.insertAtTail(2);
+    s.insertAtTail(4);
+    s.insertAtTail(5);
+
     s.swap(2,0);
 
     s.print();
