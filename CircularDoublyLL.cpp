@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 using namespace std;
 
 #define ll long long
@@ -18,12 +18,12 @@ public:
 };
 
 template<typename T>
-class CLL_D {
+class circular_double {
 private:
     Node<T>* tail;
 
 public:
-    CLL_D() : tail(nullptr) {}
+    circular_double() : tail(nullptr) {}
 
     bool is_empty() {
         return tail == nullptr;
@@ -183,16 +183,15 @@ public:
         temp->data = item;
     }
 
-    void insertAt(T item, int idx) {
-        Node<T>* newnode = new Node<T>(item);
+    void insertAt(T item, int idx){
+        Node<T>* newnode= new Node<T>(item);
 
         if (is_empty()) {
             cout << "list is empty!\n";
             return;
         }
-
         if (idx >= size()) {
-            cout << "Index out of bounds\n";
+            cout << "is not found this index in my list\n";
             return;
         }
 
@@ -200,25 +199,21 @@ public:
             insertAtHead(item);
             return;
         }
-
-        Node<T>* temp = tail->next; // Start from the head (tail->next)
-        Node<T>* pre = nullptr;
-        for (int i = 0; i < idx; ++i) {
-            pre = temp;
+        Node<T> *temp = tail->next->next; //second element
+        Node<T> *Pre =tail->next; //head
+        ll currindex = 1;
+        while (currindex < idx) {
+            Pre=temp;
             temp = temp->next;
+            currindex++;
         }
+        Pre->next=newnode;
+        newnode->next=temp;
+        newnode->prev=Pre;
+        temp->prev=temp;
 
-        pre->next = newnode;
-        newnode->prev = pre;
-        newnode->next = temp;
-        temp->prev = newnode;
 
-        // If inserting at the last index, update tail
-        if (temp == tail->next) {
-            tail = newnode;
-        }
     }
-
 
     void removeAt(int idx){
         if (is_empty()) {
@@ -334,95 +329,23 @@ public:
 
     }
 
-
-
-
-    ~CLL_D() {
-      this->clear();
-    }
 };
 
 int main() {
-    // Test cases for Doubly Circular Linked List
 
-//    CLL_D<int> myCLL;
-//
-//    // Insert elements
-//    myCLL.insertAtTail(10);
-//    myCLL.insertAtTail(20);
-//    myCLL.insertAtTail(30);
-//    myCLL.insertAtTail(40);
-//
-//    // Print the list
-//    cout << "Current list: ";
-//    myCLL.print(); // Output: 10 20 30 40
-//
-//    // Insert at head
-//    myCLL.insertAtHead(5);
-//    cout << "After inserting at head: ";
-//    myCLL.print(); // Output: 5 10 20 30 40
-//
-//    // Remove from tail
-//    myCLL.removeAtTail();
-//    cout << "After removing from tail: ";
-//    myCLL.print(); // Output: 5 10 20 30
-//
-//    // Remove from head
-//    myCLL.removeAtHead();
-//    cout << "After removing from head: ";
-//    myCLL.print(); // Output: 10 20 30
-//
-//    // Display size of the list
-//    cout << "Size of the list: " << myCLL.size() << endl; // Output: 3
-//    myCLL.insertAt(15,1);
-//    myCLL.insertAt(25,3);
-//    myCLL.insertAt(5,0);
-//    myCLL.insertAtTail(55500);
-//    myCLL.print();
-//    myCLL.removeAt(myCLL.size()-1);
-//    myCLL.print();
-//    myCLL.removeAt(2);
-//    myCLL.print();
-//    myCLL.clear();
-//    myCLL.print();
-////    cout<<myCLL.size();
-//    return 0;
+    circular_double<int>c2;
+    c2.clear();
+    c2.insertAtTail(1);
+    c2.insertAtTail(2);
+    c2.insertAtTail(3);
+    c2.insertAtTail(4);
+    c2.insertAtTail(5);
+    c2.insertAtTail(6);
 
-    CLL_D <int> s;
-    s.insertAtTail(5);
-    s.insertAtTail(5);
-    s.print();
-
-
-    s.insertAtHead(4);
-    s.print();
-    s.insertAt(3,1);
-    s.print();
-    s.swap(0,2);
-    s.print();
-    s.swap(1,2);
-    s.print();
-    s.removeAtTail();
-    s.print();
-    s.swap(0,1);
-    s.print();
-    s.removeAtHead();
-    s.swap(0,0);
-    s.print();
-    s.insertAtTail(3);
-    s.insertAtTail(4);
-    s.insertAtTail(7);
-    s.insertAtTail(8);
-    s.insertAtTail(9);
-    s.print();
-    s.removeAtTail();
-    s.insertAtTail(2);
-    s.insertAtTail(4);
-    s.insertAtTail(5);
-
-    s.swap(2,0);
-
-    s.print();
+    cout<<c2.isItemAtEqual(6,5);
+  //  c2.removeAtTail();
+   // c2.clear();
+    c2.print();
 
 
 }
