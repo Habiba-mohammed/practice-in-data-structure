@@ -72,7 +72,6 @@ struct node {
     node *right;
 };
 
-template <class T>
 class BST {
 private:
     node *root;
@@ -182,7 +181,7 @@ private:
 
 };
 
-void delitem(vector<item>&items,BST<int> &prices,BST <string> &names){
+void delitem(vector<item>&items,BST &prices,BST &names){
     string name,category; int price;
     cout<<"Please enter the item's data :-\n";
     cout<<"Name: "; cin>>name; cout<<"\n";
@@ -205,7 +204,7 @@ void delitem(vector<item>&items,BST<int> &prices,BST <string> &names){
     namesort=true;
 }
 
-void additem(vector<item>&items,BST<int> &prices,BST <string> &names){
+void additem(vector<item>&items,BST &prices,BST &names){
     string name,category; int price;
     cout<<"Please enter the item's data :-\n";
     cout<<"Name: "; cin>>name;
@@ -234,8 +233,8 @@ void displayMenu() {
 
 
 int main() {
-    BST<int> prices;
-    BST<string> names;
+    BST prices;
+    BST names;
     vector<item> items;
 
     displayMenu();
