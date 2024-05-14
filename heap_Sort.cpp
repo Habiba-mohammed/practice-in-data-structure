@@ -83,8 +83,15 @@ public:
         cout << endl;
     }
 
+    void printArrayOpposite() const { //  to add the option aslm
+        for (int i = heap_size-1; i >=0; i--) {
+            cout << harr[i] << " ";
+        }
+        cout << endl;
+    }
+
     virtual void insertelement(const Item& k) = 0;
-    virtual void removeelement() = 0;
+    virtual Item removeelement() = 0;
 
 };
 
@@ -120,23 +127,25 @@ public:
             MinHeapify(0);
         }
         heap_size = original_size;
-        printArray();
+//        printArray();
     }
 
-    void removeelement() {
+    Item removeelement() {
         if (heap_size <= 0) {
             cout << "\nUnderflow: No element to remove\n";
-            return;
+            return   Item();
         }
 
         if (heap_size == 1) {
             heap_size--;
-            return;
+            return harr[0];
         }
+        Item del=harr[0];
 
         harr[0] = harr[heap_size - 1];
         heap_size--;
         MinHeapify(0);
+        return del;
     }
 
     void insertelement(const Item& k) override {
@@ -188,23 +197,25 @@ public:
             MaxHeapify(0);
         }
         heap_size = original_size;
-        printArray();
+//        printArray();
     }
 
-    void removeelement() {
+    Item removeelement() {
         if (heap_size <= 0) {
             cout << "\nUnderflow: No element to remove\n";
-            return;
+            return Item();
         }
 
         if (heap_size == 1) {
             heap_size--;
-            return;
+            return harr[0];
         }
+        Item del= harr[0];
 
         harr[0] = harr[heap_size - 1];
         heap_size--;
         MaxHeapify(0);
+        return del;
     }
 
     void insertelement(const Item& k) override {
@@ -227,59 +238,6 @@ public:
 
 
 
-
-//int main() {
-//    // Create some items
-//    namesort=false;
-//    Item item7("Eglant", "Vegetable", 777);
-//    Item item9("Eant", "Vegetable", 4);
-//    Item item1("Apple", "Fruit", 50);
-//    Item item2("Banana", "Fruit", 30);
-//    Item item3("Carrot", "Vegetable", 20);
-//    Item item4("Dates", "DryFruit", 70);
-//    Item item5("Eggplant", "Vegetable", 40);
-//
-//    // Create a MinHeap
-//    MinHeap minHeap(10);
-//
-//    // Insert items into MinHeap
-//    minHeap.insertelement(item1);
-//    minHeap.insertelement(item2);
-//    minHeap.insertelement(item3);
-//    minHeap.insertelement(item4);
-//    minHeap.insertelement(item5);
-//
-//    // Print MinHeap
-//    cout << "MinHeap:" << endl;
-//   minHeap.printArray();
-//
-////    // Sort MinHeap
-//    minHeap.minHeapSort();
-//    cout << "Sorted MinHeap:" << endl;
-//    minHeap.printArray();
-////
-///////////////////////////////////////////////////////////////////////////////
-//   //  Create a MaxHeap
-//    MaxHeap maxHeap(10);
-//
-//    // Insert items into MaxHeap
-//    maxHeap.insertelement(item1);
-//    maxHeap.insertelement(item2);
-//    maxHeap.insertelement(item3);
-//    maxHeap.insertelement(item4);
-//    maxHeap.insertelement(item5);
-//    maxHeap.insertelement(item7);
-//    maxHeap.insertelement(item9);
-//
-//
-//
-//    // Print MaxHeap
-//    cout << "MaxHeap:" << endl;
-//    maxHeap.printArray();
-//    maxHeap.maxHeapSort();
-//    maxHeap.printArray();
-//
-//}
 void displayMenu() {
     cout << "\nMenu:\n";
     cout << "1- Add item data\n";
@@ -293,7 +251,9 @@ void displayMenu() {
     cout << "Enter your choice: ";
 }
 
-void addItem(vector<Item>& items, MinHeap& minHeap, MaxHeap& maxHeap) {
+
+
+void addItemMin(vector<Item>& items, MinHeap& minHeap) {
     string name, category;
     int price;
     cout << "Enter item name: ";
@@ -305,12 +265,66 @@ void addItem(vector<Item>& items, MinHeap& minHeap, MaxHeap& maxHeap) {
     Item newItem(name, category, price);
     items.push_back(newItem);
     minHeap.insertelement(newItem);
+//    maxHeap.insertelement(newItem);
+}
+void addItemMax(vector<Item>& items, MaxHeap& maxHeap) {
+    string name, category;
+    int price;
+    cout << "Enter item name: ";
+    cin >> name;
+    cout << "Enter item category: ";
+    cin >> category;
+    cout << "Enter item price: ";
+    cin >> price;
+    Item newItem(name, category, price);
+    items.push_back(newItem);
+//    minHeap.insertelement(newItem);
     maxHeap.insertelement(newItem);
 }
 
-void removeItem(MinHeap& minHeap, MaxHeap& maxHeap) {
-    minHeap.removeelement();
-    maxHeap.removeelement();
+
+
+void removeItemMin(MinHeap& minHeap,vector<Item>& items,int ch) {
+    if(ch==1) namesort=false;
+    else namesort=true;
+
+    Item del;
+    del=minHeap.removeelement();
+//    maxHeap.removeelement();
+    for(auto it = items.begin(); it != items.end(); ) {
+        if(it->getItemName() == del.getItemName() && it->getPrice() == del.getPrice() && it->getCategory() == del.getCategory())
+        {
+            it = items.erase(it);
+            break;
+        }
+        else ++it;
+
+    }
+
+}
+void removeItemMax(MaxHeap& maxHeap,vector<Item>&items, int ch) {
+    if(ch==1) namesort=false;
+    else namesort=true;
+
+    Item del;
+//    del=minHeap.removeelement();
+    del=maxHeap.removeelement();
+
+    for(auto it = items.begin(); it != items.end(); ) {
+        if(it->getItemName() == del.getItemName() && it->getPrice() == del.getPrice() && it->getCategory() == del.getCategory())
+        {
+            it = items.erase(it);
+            break;
+        }
+        else ++it;
+
+    }
+}
+void priceornames(){
+    cout << "\nRemove type:\n";
+    cout << "1- delete root by price \n";
+    cout << "2- delete root by name \n";
+    cout << "3- Quit\n";
 }
 
 void displayItems(const vector<Item>& items) {
@@ -324,44 +338,122 @@ int main() {
     MaxHeap maxHeap(100);
 
     int choice;
-    do {
-        displayMenu();
-        cin >> choice;
-        switch (choice) {
-            case 1:
-                addItem(items, minHeap, maxHeap);
-                break;
-            case 2:
-                removeItem(minHeap, maxHeap);
-                break;
-            case 3:
-                displayItems(items);
-                break;
-            case 4:
-                maxHeap.maxHeapSort();
-                break;
-            case 5:
-                minHeap.minHeapSort();
-                break;
-            case 6:
-                namesort=false;
-                maxHeap.maxHeapSort();
-                namesort=true;
+    cout << "\nHeap Type:\n";
+    cout << "1- MinHeap ( when deleting the root , we delete the biggest element )\n";
+    cout << "2- MaxHeap ( when deleting the root , we delete the smallest element )\n";
+    cout << "3- Quit\n";
 
-                break;
-            case 7:
-                namesort=false;
-                minHeap.minHeapSort();
-                namesort=true;
+    cin>>choice;
+    if(choice==3) return -1;
 
-                break;
-            case 8:
-                cout << "Exiting program.\n";
-                break;
-            default:
-                cout << "Invalid choice. Please try again.\n";
-        }
-    } while (choice != 8);
+    if(choice==1){
+        do {
+            displayMenu();
+            cin >> choice;
+            switch (choice) {
+                case 1:
+                    addItemMin(items, minHeap);
+                    break;
+                case 2:
+                    if(true) {
+                        priceornames();
+                        int ch;
+                        while(cin>>ch){
+                            if(ch==3) return -1;
+                            else if(ch!=1 && ch!=2) continue;
+                            else break;
+                        }
+                        removeItemMin(minHeap, items,ch);
+                        break;
+                    }
+                    break;
+                case 3:
+                    displayItems(items);
+                    break;
+                case 4:
+                    namesort=true;
+                    minHeap.minHeapSort();
+                    minHeap.printArrayOpposite(); // ascending
+                    break;
+
+                case 5:
+                    namesort=true;
+                    minHeap.minHeapSort();
+                    minHeap.printArray();
+                    break;
+                case 6:
+                    namesort=false;
+                    minHeap.minHeapSort();
+                    minHeap.printArrayOpposite();// ascending
+                    break;
+
+                case 7:
+                    namesort=false;
+                    minHeap.minHeapSort();
+                    minHeap.printArray(); //descinfing
+                    break;
+                case 8:
+                    cout << "Exiting program.\n";
+                    break;
+
+                default:
+                    cout << "Invalid choice. Please try again.\n";
+            }
+        } while (choice != 8);
+    }
+    else if(choice==2){
+        do {
+            displayMenu();
+            cin >> choice;
+            switch (choice) {
+                case 1:
+                    addItemMax(items, maxHeap);
+                    break;
+                case 2:
+                    if(true) {
+                        priceornames();
+                        int ch;
+                        while(cin>>ch){
+                            if(ch==3) return -1;
+                            else if(ch!=1 && ch!=2) continue;
+                            else break;
+                        }
+                        removeItemMax(maxHeap, items,ch);
+                    }
+                    break;
+                case 3:
+                    displayItems(items);
+                    break;
+                case 4: //by name
+                    namesort=true;
+                    maxHeap.maxHeapSort();
+                    maxHeap.printArray(); //ascending
+                    break;
+
+                case 5:
+                    namesort=true;
+                    maxHeap.maxHeapSort();
+                    maxHeap.printArrayOpposite(); //descninding
+                    break;
+                case 6:
+                    namesort=false; //price
+                    maxHeap.maxHeapSort();
+                    maxHeap.printArray();   //ascending
+                case 7:
+                    namesort=false; //price
+                    maxHeap.maxHeapSort();
+                    maxHeap.printArrayOpposite();   //ascending
+                    break;
+                case 8:
+                    cout << "Exiting program.\n";
+                    break;
+                default:
+                    cout << "Invalid choice. Please try again.\n";
+            }
+        } while (choice != 8);
+    }
+
+
 
     return 0;
 }
