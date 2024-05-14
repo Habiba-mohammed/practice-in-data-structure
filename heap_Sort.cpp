@@ -284,9 +284,7 @@ void addItemMax(vector<Item>& items, MaxHeap& maxHeap) {
 
 
 
-void removeItemMin(MinHeap& minHeap,vector<Item>& items,int ch) {
-    if(ch==1) namesort=false;
-    else namesort=true;
+void removeItemMin(MinHeap& minHeap,vector<Item>& items) {
 
     Item del;
     del=minHeap.removeelement();
@@ -302,9 +300,7 @@ void removeItemMin(MinHeap& minHeap,vector<Item>& items,int ch) {
     }
 
 }
-void removeItemMax(MaxHeap& maxHeap,vector<Item>&items, int ch) {
-    if(ch==1) namesort=false;
-    else namesort=true;
+void removeItemMax(MaxHeap& maxHeap,vector<Item>&items) {
 
     Item del;
 //    del=minHeap.removeelement();
@@ -320,12 +316,12 @@ void removeItemMax(MaxHeap& maxHeap,vector<Item>&items, int ch) {
 
     }
 }
-void priceornames(){
-    cout << "\nRemove type:\n";
-    cout << "1- delete root by price \n";
-    cout << "2- delete root by name \n";
-    cout << "3- Quit\n";
-}
+//void priceornames(){
+//    cout << "\nRemove type:\n";
+//    cout << "1- delete root by price \n";
+//    cout << "2- delete root by name \n";
+//    cout << "3- Quit\n";
+//}
 
 void displayItems(const vector<Item>& items) {
     for (const auto& item : items) {
@@ -355,17 +351,16 @@ int main() {
                     addItemMin(items, minHeap);
                     break;
                 case 2:
-                    if(true) {
-                        priceornames();
-                        int ch;
-                        while(cin>>ch){
-                            if(ch==3) return -1;
-                            else if(ch!=1 && ch!=2) continue;
-                            else break;
-                        }
-                        removeItemMin(minHeap, items,ch);
-                        break;
-                    }
+//                    if(true) {
+//                        priceornames();
+//                        int ch;
+//                        while(cin>>ch){
+//                           if(ch==3) return -1;
+//                           else if(ch!=1 && ch!=2) continue;
+//                           else break;
+//                       }
+                    removeItemMin(minHeap, items);
+//                    }
                     break;
                 case 3:
                     displayItems(items);
@@ -390,7 +385,7 @@ int main() {
                 case 7:
                     namesort=false;
                     minHeap.minHeapSort();
-                    minHeap.printArray(); //descinfing
+                    minHeap.printArray(); //descinding
                     break;
                 case 8:
                     cout << "Exiting program.\n";
@@ -410,16 +405,16 @@ int main() {
                     addItemMax(items, maxHeap);
                     break;
                 case 2:
-                    if(true) {
-                        priceornames();
-                        int ch;
-                        while(cin>>ch){
-                            if(ch==3) return -1;
-                            else if(ch!=1 && ch!=2) continue;
-                            else break;
-                        }
-                        removeItemMax(maxHeap, items,ch);
-                    }
+//                    if(true) {
+//                        priceornames();
+//                        int ch;
+//                        while(cin>>ch){
+//                            if(ch==3) return -1;
+//                            else if(ch!=1 && ch!=2) continue;
+//                            else break;
+//                        }
+                    removeItemMax(maxHeap, items);
+//                    }
                     break;
                 case 3:
                     displayItems(items);
