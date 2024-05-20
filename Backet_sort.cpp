@@ -31,7 +31,7 @@ void bucketSortFloat(vector<float>& arr, int numBuckets) {
     vector<vector<float>> buckets(numBuckets);
 
 
-    for (int i = 0; i < numBuckets; i++) {
+    for (int i = 0; i < arr.size(); i++) {
         int index = numBuckets * arr[i];
         buckets[index].push_back(arr[i]);
     }
